@@ -56,10 +56,10 @@ void fix_up(Heap *heap, unsigned long k)
 
 void fix_down(Heap *heap, unsigned long k)
 {
-    while (2 * k <= heap->last-1)
+    while (2 * k <= heap->last - 1)
     {
         unsigned long j = 2 * k;
-        if (j < heap->last-1 && heap->data[j].number > heap->data[j + 1].number)
+        if (j < heap->last - 1 && heap->data[j].number > heap->data[j + 1].number)
             j++;
 
         if (!(heap->data[k].number > heap->data[j].number))
@@ -78,9 +78,9 @@ void insert(Heap *heap, Item item)
 Item pop_min(Heap *heap)
 {
     Item min = heap->data[0];
-    exchange(heap,0,heap->last-1);
+    exchange(heap, 0, heap->last - 1);
     heap->last--;
-    fix_down(heap,0);
+    fix_down(heap, 0);
     return min;
 }
 
@@ -104,7 +104,7 @@ int main()
     printf("\n");
     print_item(min);
     printf("\n");
-    Item item0= create_item(0.0, 1l);
+    Item item0 = create_item(0.0, 1l);
     insert(heap, item0);
     print_heap(heap);
     free_heap(heap);
