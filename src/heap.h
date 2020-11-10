@@ -12,7 +12,6 @@ typedef struct Heap
     unsigned long last;
 } Heap;
 
-
 Item item_create(float number, unsigned long block);
 void item_print(Item item);
 Heap *heap_create(unsigned long size);
