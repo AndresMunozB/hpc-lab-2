@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// IMPLEMENTACION BASADA EN: https://www.cimat.mx/~alram/comp_algo/clase17.pdf
 Item item_create(float number, unsigned long block)
 {
     Item item;
