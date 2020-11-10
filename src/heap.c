@@ -83,7 +83,7 @@ Item pop_min(Heap *heap)
     fix_down(heap, 0);
     return min;
 }
-
+/*
 int main()
 {
     Item item1 = create_item(1.0, 1l);
@@ -109,4 +109,4 @@ int main()
     print_heap(heap);
     free_heap(heap);
     return 0;
-}
+}*/
