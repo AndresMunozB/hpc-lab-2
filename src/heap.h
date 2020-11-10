@@ -12,13 +12,14 @@ typedef struct Heap
     unsigned long last;
 } Heap;
 
-Heap *create_heap(unsigned long size);
-void free_heap(Heap *heap);
-Item create_item(float number, unsigned long block);
-void print_item(Item item);
-void print_heap(Heap *heap);
-void exchange(Heap *heap, unsigned long i, unsigned long j);
-void fix_up(Heap *heap, unsigned long k);
-void fix_down(Heap *heap, unsigned long k);
-void insert(Heap *heap, Item item);
-Item pop_min(Heap *heap);
+
+Item item_create(float number, unsigned long block);
+void item_print(Item item);
+Heap *heap_create(unsigned long size);
+void heap_free(Heap *heap);
+void heap_print(Heap *heap);
+void heap_exchange(Heap *heap, unsigned long i, unsigned long j);
+void heap_fix_up(Heap *heap, unsigned long k);
+void heap_fix_down(Heap *heap, unsigned long k);
+void heap_insert(Heap *heap, Item item);
+Item heap_pop(Heap *heap);

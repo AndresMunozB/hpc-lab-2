@@ -2,7 +2,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-Heap *create_heap(unsigned long size)
+Item item_create(float number, unsigned long block)
+{
+    Item item;
+    item.number = number;
+    item.block = block;
+    return item;
+}
+
+void item_print(Item item)
+{
+    printf("Number: %f\n", item.number);
+    printf("Block: %lu\n", item.block);
+}
+
+Heap *heap_create(unsigned long size)
 {
     Heap *heap = (Heap *)malloc(sizeof(Heap));
     heap->data = (Item *)malloc(sizeof(Item) * size);
@@ -11,50 +25,36 @@ Heap *create_heap(unsigned long size)
     return heap;
 }
 
-void free_heap(Heap *heap)
+void heap_free(Heap *heap)
 {
     free(heap->data);
     free(heap);
 }
 
-Item create_item(float number, unsigned long block)
-{
-    Item item;
-    item.number = number;
-    item.block = block;
-    return item;
-}
-
-void print_item(Item item)
-{
-    printf("Number: %f\n", item.number);
-    printf("Block: %lu\n", item.block);
-}
-
-void print_heap(Heap *heap)
+void heap_print(Heap *heap)
 {
     for (unsigned long i = 0; i < heap->last; i++)
-        print_item(heap->data[i]);
+        item_print(heap->data[i]);
     printf("\n");
 }
 
-void exchange(Heap *heap, unsigned long i, unsigned long j)
+void heap_exchange(Heap *heap, unsigned long i, unsigned long j)
 {
     Item temp = heap->data[i];
     heap->data[i] = heap->data[j];
     heap->data[j] = temp;
 }
 
-void fix_up(Heap *heap, unsigned long k)
+void heap_fix_up(Heap *heap, unsigned long k)
 {
     while (k > 0 && heap->data[k / 2].number > heap->data[k].number)
     {
-        exchange(heap, k, k / 2);
+        heap_exchange(heap, k, k / 2);
         k = k / 2;
     }
 }
 
-void fix_down(Heap *heap, unsigned long k)
+void heap_fix_down(Heap *heap, unsigned long k)
 {
     while (2 * k <= heap->last - 1)
     {
@@ -64,49 +64,49 @@ void fix_down(Heap *heap, unsigned long k)
 
         if (!(heap->data[k].number > heap->data[j].number))
             break;
-        exchange(heap, k, j);
+        heap_exchange(heap, k, j);
         k = j;
     }
 }
 
-void insert(Heap *heap, Item item)
+void heap_insert(Heap *heap, Item item)
 {
     heap->data[heap->last++] = item;
-    fix_up(heap, heap->last - 1);
+    heap_fix_up(heap, heap->last - 1);
 }
 
-Item pop_min(Heap *heap)
+Item heap_pop(Heap *heap)
 {
     Item min = heap->data[0];
-    exchange(heap, 0, heap->last - 1);
+    heap_exchange(heap, 0, heap->last - 1);
     heap->last--;
-    fix_down(heap, 0);
+    heap_fix_down(heap, 0);
     return min;
 }
 /*
 int main()
 {
-    Item item1 = create_item(1.0, 1l);
-    Item item2 = create_item(2.0, 3l);
-    Item item3 = create_item(3.0, 2l);
-    Item item4 = create_item(4.0, 4l);
-    //print_item(item);
-    Heap *heap = create_heap(4l);
-    insert(heap, item2);
-    insert(heap, item3);
+    Item item1 = item_create(1.0, 1l);
+    Item item2 = item_create(2.0, 3l);
+    Item item3 = item_create(3.0, 2l);
+    Item item4 = item_create(4.0, 4l);
+    //item_print(item);
+    Heap *heap = heap_create(4l);
+    heap_insert(heap, item2);
+    heap_insert(heap, item3);
 
-    insert(heap, item1);
-    insert(heap, item4);
-    print_heap(heap);
+    heap_insert(heap, item1);
+    heap_insert(heap, item4);
+    heap_print(heap);
     printf("\n");
-    Item min = pop_min(heap);
-    print_heap(heap);
+    Item min = heap_pop(heap);
+    heap_print(heap);
     printf("\n");
-    print_item(min);
+    item_print(min);
     printf("\n");
-    Item item0 = create_item(0.0, 1l);
-    insert(heap, item0);
-    print_heap(heap);
-    free_heap(heap);
+    Item item0 = item_create(0.0, 1l);
+    heap_insert(heap, item0);
+    heap_print(heap);
+    heap_free(heap);
     return 0;
 }*/
