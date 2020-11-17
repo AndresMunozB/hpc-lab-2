@@ -91,38 +91,33 @@ void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
         swap(r3, r4);
     }
 }
+
 //GENERA UNA LISTA ORDENADA DE NUMEROS
-void simd_sort(List *list, List *list_sorted, int debug)
+void simd_sort(float* numbers, unsigned long size)
 {
     unsigned long counter = 0l;
-    unsigned long steps = list->len / 16;
-    ListList *ll = ll_create();
-    for (unsigned long i = 0; i < list->len / 16; i++)
+    unsigned long steps = size / 16;
+    
+    for (unsigned long i = 0; i < size / 16; i++)
     {
         __m128 r1, r2, r3, r4;
         //CARGAR REGISTROS
-        r1 = _mm_load_ps(list->data + (i * 16) + 0);
-        r2 = _mm_load_ps(list->data + (i * 16) + 4);
-        r3 = _mm_load_ps(list->data + (i * 16) + 8);
-        r4 = _mm_load_ps(list->data + (i * 16) + 12);
+        r1 = _mm_load_ps(numbers + (i * 16) + 0);
+        r2 = _mm_load_ps(numbers + (i * 16) + 4);
+        r3 = _mm_load_ps(numbers + (i * 16) + 8);
+        r4 = _mm_load_ps(numbers + (i * 16) + 12);
 
         sort_in_register(&r1, &r2, &r3, &r4); // 4 NUMEROS EN CADA REGISTRO ORDENADO DE MENOS A MAYOR
         bmn_network(&r1, &r2); // 8 NUMEROS ORDENADOS DE MENOS A MAYOR EN DOS REGISTROS
         bmn_network(&r3, &r4); // 8 NUMEROS ORDENADOS DE MENOS A MAYOR EN DOS REGISTROS
         merge_simd(&r1, &r2, &r3, &r4); // 16 NUERMOS ORDENADOS DE MENOR A MAYOR EN 4 REGISTROS
-
-        List *l1 = list_create();
-        list_load(l1, r1); // SE PUEDE OPTIMIZAR GUARDANDO DE A 4
-        list_load(l1, r2);
-        list_load(l1, r3);
-        list_load(l1, r4);
-        ll_append(ll, *l1);
-        if(debug)
-            printf("SORTING BLOCK #%lu OF %lu BLOCKS\n", counter+1, steps);
+        
+        //SE GUARDAN LOS REGISTROS
+        _mm_store_ps(numbers + (i * 16) + 0, r1);
+        _mm_store_ps(numbers + (i * 16) + 4, r2);
+        _mm_store_ps(numbers + (i * 16) + 8, r3);
+        _mm_store_ps(numbers + (i * 16) + 12, r4);
         counter ++;
-    }
-    if(debug)
-        printf("MERGING BLOCKS...\n");
-    ll_merge(ll, list_sorted);
-    ll_free(ll);
+    }    
 }
+
