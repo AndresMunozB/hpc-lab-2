@@ -88,32 +88,3 @@ Item heap_pop(Heap *heap)
     heap_fix_down(heap, 0);
     return min;
 }
-/*
-int main()
-{
-    Item item1 = item_create(1.0, 1l);
-    Item item2 = item_create(2.0, 3l);
-    Item item3 = item_create(3.0, 2l);
-    Item item4 = item_create(4.0, 4l);
-    //item_print(item);
-    Heap *heap = heap_create(4l);
-    heap_insert(heap, item2);
-    heap_insert(heap, item3);
-    heap_insert(heap, item1);
-    heap_insert(heap, item4);
-    heap_print(heap);
-    printf("\n");
-    Item min = heap_pop(heap);
-    min = heap_pop(heap);
-    min = heap_pop(heap);
-    min = heap_pop(heap);
-    heap_print(heap);
-    printf("\n");
-    item_print(min);
-    printf("\n");
-    Item item0 = item_create(0.0, 1l);
-    heap_insert(heap, item0);
-    heap_print(heap);
-    heap_free(heap);
-    return 0;
-}*/
