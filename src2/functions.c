@@ -128,7 +128,6 @@ void simd_sort(float *numbers, unsigned long size)
 
 void multiway_sort(float *numbers, unsigned long size)
 {
-    printf("multiway_sort\n");
     float *numbers_aux = (float *)malloc(sizeof(float) * size);
     int *flags = (int *)calloc(size, sizeof(int));
     unsigned long index = 0l;
@@ -150,8 +149,7 @@ void multiway_sort(float *numbers, unsigned long size)
 
     for (unsigned long i = 0; i < size; i++)
         numbers[i] = numbers_aux[i];
-    print_float_array(numbers,size);
-    printf("\n");
+    
     free(numbers_aux); //TIRA ERROR SI LO DESCOMENTO
     free(flags);       //TIRA ERROR SI LO DESCOMENTO
     heap_free(heap);
@@ -159,7 +157,6 @@ void multiway_sort(float *numbers, unsigned long size)
 
 void merge(float *numbers, unsigned long size, int levels)
 {
-    printf("merge\n");
     float *numbers_aux = (float *)malloc(sizeof(float) * size);
     int *flags = (int *)calloc(size, sizeof(int));
     unsigned long index = 0l;

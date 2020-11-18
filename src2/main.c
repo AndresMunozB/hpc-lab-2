@@ -8,7 +8,7 @@ int main()
     unsigned long size = 64l;
 
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size);
-    read_file(name_file, numbers, size); // LEER ARCHIVO
+    
     
 
     //simd_sort(numbers, size);
@@ -16,8 +16,9 @@ int main()
 
     for (int i =0;i<1000;i++){
         printf("i: %d\n", i);
-        print_float_array(numbers,size);
+        read_file(name_file, numbers, size); // LEER ARCHIVO
         omp_sort(numbers, size, 2, 2);
+        //print_float_array(numbers,size);
     }
     
     
