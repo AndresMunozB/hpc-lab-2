@@ -21,6 +21,16 @@ void print_float_array(float *array, unsigned long size)
         printf("%f ", array[i]);
 }
 
+unsigned long pow2(int exp)
+{
+    if (exp == 0)
+        return 1;
+    unsigned long res = 1;
+    for (int i = 0; i < exp; i++)
+        res = res * 2;
+    return res;
+}
+
 int get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *d)
 {
     int c;

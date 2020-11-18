@@ -1,6 +1,8 @@
 #include "functions.h"
 #include "heap.h"
 #include <omp.h>
+#include <stdio.h>
+#include "utils.h"
 
 void swap(__m128 *r1, __m128 *r2)
 {
@@ -126,10 +128,11 @@ void simd_sort(float *numbers, unsigned long size)
 
 void multiway_sort(float *numbers, unsigned long size)
 {
+    printf("multiway_sort\n");
     float *numbers_aux = (float *)malloc(sizeof(float) * size);
     int *flags = (int *)calloc(size, sizeof(int));
     unsigned long index = 0l;
-    Heap *heap = heap_create(size / 16);
+    Heap *heap = heap_create(size / 16); // SI SIZE ES MENOR QUE 16 RETORNA 0 (ERROR DE MEMORIA)
     Item item_aux;
 
     for (unsigned long i = 0; i < size; i += 16)
@@ -144,16 +147,46 @@ void multiway_sort(float *numbers, unsigned long size)
         if (item_aux.block + 1 < size && !flags[item_aux.block + 1])
             heap_insert(heap, item_create(numbers[item_aux.block + 1], item_aux.block + 1));
     }
+
     for (unsigned long i = 0; i < size; i++)
         numbers[i] = numbers_aux[i];
-
-    //free(numbers_aux); TIRA ERROR SI LO DESCOMENTO
-    //free(flags); TIRA ERROR SI LO DESCOMENTO
+    print_float_array(numbers,size);
+    printf("\n");
+    free(numbers_aux); //TIRA ERROR SI LO DESCOMENTO
+    free(flags);       //TIRA ERROR SI LO DESCOMENTO
     heap_free(heap);
 }
 
-void merge(float *numbers, unsigned long size)
+void merge(float *numbers, unsigned long size, int levels)
 {
+    printf("merge\n");
+    float *numbers_aux = (float *)malloc(sizeof(float) * size);
+    int *flags = (int *)calloc(size, sizeof(int));
+    unsigned long index = 0l;
+    unsigned long blocks = pow2(levels);
+    unsigned long size_block = size / blocks;
+    Heap *heap = heap_create(blocks);
+    Item item_aux;
+    
+    for (unsigned long i = 0; i < size; i += size_block)
+        heap_insert(heap, item_create(numbers[i], i));
+
+    while (heap->last != 0)
+    {
+        item_aux = heap_pop(heap);
+        numbers_aux[index++] = item_aux.number;
+        flags[item_aux.block] = 1;
+
+        if (item_aux.block + 1 < size && !flags[item_aux.block + 1])
+            heap_insert(heap, item_create(numbers[item_aux.block + 1], item_aux.block + 1));
+    }
+
+    for (unsigned long i = 0; i < size; i++)
+        numbers[i] = numbers_aux[i];
+
+    free(numbers_aux);
+    free(flags);
+    heap_free(heap);
     return;
 }
 
@@ -161,16 +194,21 @@ void omp_sort(float *array, unsigned long size, int levels, int threads)
 {
     omp_set_num_threads(threads);
     #pragma omp parallel
-    #pragma omp single nowait
-    sort_aux(array, size, levels);
+    {
+        #pragma omp single
+        sort_aux(array, size, levels);
+    }
+
+    
+    #pragma omp barrier
 }
 
 void sort_aux(float *array, unsigned long size, int levels)
 {
+
     if (levels == 0) //CASO BORDE
     {
-        for (unsigned long i = 0; i < size; i += 16)
-            simd_sort(array, size);
+        simd_sort(array, size);
         multiway_sort(array, size);
         return;
     }
@@ -180,10 +218,11 @@ void sort_aux(float *array, unsigned long size, int levels)
     {
         sort_aux(array, half, levels - 1);
     }
-    #pragma omp task untied //ORDENAR MITAD DERECHA
+    #pragma omp task untied//ORDENAR MITAD DERECHA
     {
         sort_aux(array + half, half, levels - 1);
     }
     #pragma omp taskwait
-    merge(array,size);
+    
+    merge(array, size, 1);
 }
