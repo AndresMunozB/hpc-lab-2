@@ -1,4 +1,8 @@
 #include "functions.h"
+#include "heap.h"
+#include <omp.h>
+#include <string.h>
+#include "utils.h"
 
 void swap(__m128 *r1, __m128 *r2)
 {
@@ -72,7 +76,7 @@ void bmn_network(__m128 *r1, __m128 *r2)
     *r2 = _mm_shuffle_ps(*r2, *r2, _MM_SHUFFLE(0, 2, 1, 3)); // INVERTIR EXTREMOS
 }
 
-//GENERA UN BLOQUE DE 16 NUMEROS ORDENADOS DE MENOR A MAYOR  
+//GENERA UN BLOQUE DE 16 NUMEROS ORDENADOS DE MENOR A MAYOR
 void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
 {
     bmn_network(r1, r3);
@@ -91,38 +95,119 @@ void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
         swap(r3, r4);
     }
 }
+
 //GENERA UNA LISTA ORDENADA DE NUMEROS
-void simd_sort(List *list, List *list_sorted, int debug)
+void simd_sort(float *numbers, unsigned long size)
 {
     unsigned long counter = 0l;
-    unsigned long steps = list->len / 16;
-    ListList *ll = ll_create();
-    for (unsigned long i = 0; i < list->len / 16; i++)
+    unsigned long steps = size / 16;
+    __m128 r1, r2, r3, r4;
+
+    for (unsigned long i = 0; i < size / 16; i++)
     {
-        __m128 r1, r2, r3, r4;
         //CARGAR REGISTROS
-        r1 = _mm_load_ps(list->data + (i * 16) + 0);
-        r2 = _mm_load_ps(list->data + (i * 16) + 4);
-        r3 = _mm_load_ps(list->data + (i * 16) + 8);
-        r4 = _mm_load_ps(list->data + (i * 16) + 12);
+        r1 = _mm_load_ps(numbers + (i * 16) + 0);
+        r2 = _mm_load_ps(numbers + (i * 16) + 4);
+        r3 = _mm_load_ps(numbers + (i * 16) + 8);
+        r4 = _mm_load_ps(numbers + (i * 16) + 12);
 
+        //ORDENAMIENTO DE LOS 16 ELEMENTOS
         sort_in_register(&r1, &r2, &r3, &r4); // 4 NUMEROS EN CADA REGISTRO ORDENADO DE MENOS A MAYOR
-        bmn_network(&r1, &r2); // 8 NUMEROS ORDENADOS DE MENOS A MAYOR EN DOS REGISTROS
-        bmn_network(&r3, &r4); // 8 NUMEROS ORDENADOS DE MENOS A MAYOR EN DOS REGISTROS
-        merge_simd(&r1, &r2, &r3, &r4); // 16 NUERMOS ORDENADOS DE MENOR A MAYOR EN 4 REGISTROS
+        bmn_network(&r1, &r2);                // 8 NUMEROS ORDENADOS DE MENOS A MAYOR EN DOS REGISTROS
+        bmn_network(&r3, &r4);                // 8 NUMEROS ORDENADOS DE MENOS A MAYOR EN DOS REGISTROS
+        merge_simd(&r1, &r2, &r3, &r4);       // 16 NUERMOS ORDENADOS DE MENOR A MAYOR EN 4 REGISTROS
 
-        List *l1 = list_create();
-        list_load(l1, r1); // SE PUEDE OPTIMIZAR GUARDANDO DE A 4
-        list_load(l1, r2);
-        list_load(l1, r3);
-        list_load(l1, r4);
-        ll_append(ll, *l1);
-        if(debug)
-            printf("SORTING BLOCK #%lu OF %lu BLOCKS\n", counter+1, steps);
-        counter ++;
+        //SE GUARDAN LOS REGISTROS
+        _mm_store_ps(numbers + (i * 16) + 0, r1);
+        _mm_store_ps(numbers + (i * 16) + 4, r2);
+        _mm_store_ps(numbers + (i * 16) + 8, r3);
+        _mm_store_ps(numbers + (i * 16) + 12, r4);
+        counter++;
     }
-    if(debug)
-        printf("MERGING BLOCKS...\n");
-    ll_merge(ll, list_sorted);
-    ll_free(ll);
+}
+
+void multiway_sort(float *numbers, unsigned long size)
+{
+    float numbers_aux[size];
+    int flags[size];
+    memset(flags, 0, sizeof(flags));
+    unsigned long index = 0l;
+    Heap *heap = heap_create(size / 16); // SI SIZE ES MENOR QUE 16 RETORNA 0 (ERROR DE MEMORIA)
+    Item item_aux;
+
+    for (unsigned long i = 0; i < size; i += 16)
+    {
+        heap_insert(heap, item_create(numbers[i], i));
+        flags[i] = 1;
+    }
+
+    while (heap->last != 0)
+    {
+        item_aux = heap_pop(heap);
+        numbers_aux[index++] = item_aux.number;
+        flags[item_aux.block] = 1;
+        if (item_aux.block + 1 < size && !flags[item_aux.block + 1])
+            heap_insert(heap, item_create(numbers[item_aux.block + 1], item_aux.block + 1));
+    }
+
+    for (unsigned long i = 0; i < size; i++)
+        numbers[i] = numbers_aux[i];
+    heap_free(heap);
+}
+
+void merge(float *numbers, unsigned long size)
+{
+    float numbers_aux[size];
+    unsigned long half = size / 2;
+    unsigned long left_count = 0;
+    unsigned long right_count = half;
+    unsigned long index = 0;
+
+    while (left_count < half && right_count < size)
+    {
+        if (numbers[left_count] > numbers[right_count])
+            numbers_aux[index++] = numbers[right_count++];
+        else
+            numbers_aux[index++] = numbers[left_count++];
+    }
+    while (left_count < half)
+        numbers_aux[index++] = numbers[left_count++];
+    while (right_count < size)
+        numbers_aux[index++] = numbers[right_count++];
+
+    for (unsigned long i = 0; i < size; i++)
+        numbers[i] = numbers_aux[i];
+
+    return;
+}
+
+void omp_sort(float *array, unsigned long size, int levels, int threads)
+{
+    omp_set_num_threads(threads);
+    #pragma omp parallel
+    #pragma omp single
+    sort_aux(array, size, levels);
+}
+
+void sort_aux(float *array, unsigned long size, int levels)
+{
+
+    if (levels == 0) //CASO BORDE
+    {
+        simd_sort(array, size);
+        multiway_sort(array, size);
+        return;
+    }
+    unsigned long half = size / 2;
+
+    #pragma omp task untied //ORDENAR MITAD IZQUIERDA
+    {
+        sort_aux(array, half, levels - 1);
+    }
+    #pragma omp task untied //ORDENAR MITAD DERECHA
+    {
+        sort_aux(array + half, half, levels - 1);
+    }
+    #pragma omp taskwait
+    merge(array, size);
 }
