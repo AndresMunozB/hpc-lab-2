@@ -11,5 +11,6 @@ void write_file(char *file_name, float *array, unsigned long size);
 void print_float_array(float *array, unsigned long size);
 unsigned long pow2(int exp);
 int get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *d,int *l,int *h);
+void write_file_normal(char *file_name, double *array, unsigned long size);
 
 #endif

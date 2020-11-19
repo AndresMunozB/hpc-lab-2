@@ -15,6 +15,14 @@ void write_file(char *file_name, float *array, unsigned long size)
     fclose(output_file); //Cerrar archivo
 }
 
+void write_file_normal(char *file_name, double *array, unsigned long size)
+{
+    FILE *output_file = fopen(file_name, "w"); // Abrir archivo
+    for (int i = 0 ; i < size ; i++)
+        fprintf(output_file, "%f\n", array[i]);
+    fclose(output_file); //Cerrar archivo
+}
+
 void print_float_array(float *array, unsigned long size)
 {
     for (unsigned long i = 0; i < size; i++)

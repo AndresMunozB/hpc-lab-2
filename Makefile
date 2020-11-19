@@ -2,9 +2,9 @@ INC_DIRS = -Iinclude
 CFLAGS = -Wall -c
 FOPENMP = -fopenmp
 
-compilation: obj/functions.o obj/heap.o obj/list.o obj/main.o obj/testsimdsort.o
+compilation: obj/functions.o obj/heap.o obj/list.o obj/main.o obj/testopenmpsort.o
 	@ gcc -o bin/sort.out obj/main.o obj/functions.o obj/heap.o obj/utils.o $(FOPENMP)
-	@ gcc -o bin/testsimdsort.out obj/testsimdsort.o obj/functions.o obj/heap.o obj/utils.o $(FOPENMP) 
+	@ gcc -o bin/testopenmpsort.out obj/testopenmpsort.o obj/functions.o obj/heap.o obj/utils.o $(FOPENMP) 
 	@ echo "Compilation success"
 
 obj/functions.o: src/functions.c
@@ -19,8 +19,8 @@ obj/list.o: src/utils.c
 obj/main.o: src/main.c
 	@ gcc $(CFLAGS) $(INC_DIRS) src/main.c -o obj/main.o
 
-obj/testsimdsort.o: src/testsimdsort.c
-	@ gcc $(CFLAGS) $(INC_DIRS) src/testsimdsort.c -o obj/testsimdsort.o
+obj/testopenmpsort.o: src/testopenmpsort.c
+	@ gcc $(CFLAGS) $(INC_DIRS) src/testopenmpsort.c -o obj/testopenmpsort.o
 
 clean:
 	@ rm -rf obj/*
@@ -33,8 +33,26 @@ run:
 	@ ./bin/sort.out -i ./data/160000floats.raw -o 160000floatssorted.raw -N 160000l -d 1 -l 2 -h 4
 
 run_testsimdsort:
-	@ echo "Running testsimdsort..."
-	@ ./bin/testsimdsort.out -i ./data/160000floats.raw -o 160000floatssorted.raw -N 160000l -d 1 -l 2 -h 4
+	@ echo "Running testopenmpsort..."
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_1h.csv -N 160000l -d 1 -l 2 -h 1
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_4h.csv -N 160000l -d 1 -l 2 -h 4
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_20h.csv -N 160000l -d 1 -l 2 -h 10
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_50h.csv -N 160000l -d 1 -l 2 -h 15
+
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_1h.csv -N 160000l -d 1 -l 3 -h 1
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_4h.csv -N 160000l -d 1 -l 3 -h 4
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_20h.csv -N 160000l -d 1 -l 3 -h 10
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_50h.csv -N 160000l -d 1 -l 3 -h 15
+
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_1h.csv -N 160000l -d 1 -l 4 -h 1
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_4h.csv -N 160000l -d 1 -l 4 -h 4
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_20h.csv -N 160000l -d 1 -l 4 -h 10
+	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_50h.csv -N 160000l -d 1 -l 4 -h 15
+
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_1h.csv -N 160000l -d 1 -l 5 -h 1
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_4h.csv -N 160000l -d 1 -l 5 -h 4
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_20h.csv -N 160000l -d 1 -l 5 -h 10
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_50h.csv -N 160000l -d 1 -l 5 -h 15
 
 start_sort: clean compilation run
 
