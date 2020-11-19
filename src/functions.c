@@ -100,7 +100,6 @@ void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
 void simd_sort(float *numbers, unsigned long size)
 {
     unsigned long counter = 0l;
-    unsigned long steps = size / 16;
     __m128 r1, r2, r3, r4;
 
     for (unsigned long i = 0; i < size / 16; i++)

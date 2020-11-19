@@ -31,23 +31,23 @@ unsigned long pow2(int exp)
     return res;
 }
 
-int get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *d)
+int get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *d,int *l,int *h)
 {
     int c;
 
     opterr = 0;
-    if (argc < 9)
+    if (argc < 13)
     {
         printf("The number of parameters less than requested\n");
         return 0;
     }
-    else if (argc > 9)
+    else if (argc > 13)
     {
         printf("The number of parameters greater than the requested\n");
         return 0;
     }
 
-    while ((c = getopt(argc, argv, "i:o:N:d:")) != -1)
+    while ((c = getopt(argc, argv, "i:o:N:d:l:h:")) != -1)
     {
         switch (c)
         {
@@ -63,8 +63,14 @@ int get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *d
         case 'd':
             sscanf(optarg, "%i", d);
             break;
+        case 'l':
+            sscanf(optarg, "%i", l);
+            break;
+        case 'h':
+            sscanf(optarg, "%i", h);
+            break;
         case '?':
-            if (optopt == 'i' || optopt == 'o' || optopt == 'N')
+            if (optopt == 'i' || optopt == 'o' || optopt == 'N' || optopt == 'd' || optopt == 'l' || optopt == 'h')
             {
                 fprintf(stderr, "Opcion -%c requiere un argumento.\n", optopt);
                 exit(EXIT_FAILURE);
