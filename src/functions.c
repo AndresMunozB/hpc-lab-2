@@ -185,12 +185,13 @@ void omp_sort(float *array, unsigned long size, int levels, int threads)
     omp_set_num_threads(threads);
     #pragma omp parallel
     #pragma omp single
+    printf("sort_aux\n");
     sort_aux(array, size, levels);
 }
 
 void sort_aux(float *array, unsigned long size, int levels)
 {
-
+    printf("sort_aux %d\n", levels);
     if (levels == 0) //CASO BORDE
     {
         simd_sort(array, size);
@@ -208,5 +209,6 @@ void sort_aux(float *array, unsigned long size, int levels)
         sort_aux(array + half, half, levels - 1);
     }
     #pragma omp taskwait
+    printf("merge %d\n", levels);
     merge(array, size);
 }

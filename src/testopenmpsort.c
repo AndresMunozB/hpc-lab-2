@@ -21,34 +21,27 @@ int main(int argc, char *argv[])
     printf("levels: %d\n", levels);
     printf("dValue: %d\n", dValue);
     */
-    
-    float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
+
     int iterations = 10;
     double *times = (double *)malloc(sizeof(double) * iterations);
+    float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
     for (int i = 0; i < iterations; i++)
     {
-        printf("leer\n");
-        read_file(name_file, numbers, size);                                 // LEER ARCHIVO
-
-        clock_t t = clock();                                                 // SE COMIENZA A MEDIR EL TIEMPO
-
-        printf("omp_sort\n");
-        printf("levels: %d\n", levels);
-        printf("threads: %d\n", threads);
-        omp_sort(numbers, size, levels, threads);                            // SORT THE NUMBERS
-
-        double time_taken = ((double)(clock() - t)) / CLOCKS_PER_SEC;        // SE TERMINA DE MEDIR EL TIEMPO
-
-        printf("times\n");
+        printf("TEST #%d\n",i);
+        clock_t t = clock();                 // SE COMIENZA A MEDIR EL TIEMPO
+        read_file(name_file, numbers, size); // LEER ARCHIVO
+        printf("    omp_sort\n");
+        printf("    levels: %d\n", levels);
+        printf("    threads: %d\n", threads);
+        omp_sort(numbers, size, levels, threads);                     // SORT THE NUMBERS
+        double time_taken = ((double)(clock() - t)) / CLOCKS_PER_SEC; // SE TERMINA DE MEDIR EL TIEMPO
         times[i] = time_taken;
-        printf("simd_sort() took %f seconds to execute \n", time_taken);
-
-        printf("2\n");
+        printf("TEST #%d: simd_sort() took %f seconds to execute \n", i, time_taken);
     }
-    write_file_normal(output_name_file, times, iterations);                       // ESCRIBIR LOS DATOS ORDENADOS
+    write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
     printf("\n");
-    printf("Termino .. %s \n \n",output_name_file);
-    free(numbers);                                                    // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
+    printf("Termino .. %s \n \n", output_name_file);
+    free(numbers); // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
     free(times);
     return 0;
 }
