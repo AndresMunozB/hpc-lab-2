@@ -5,31 +5,27 @@
 int main(int argc, char *argv[])
 {
     // PARAMETROS DE ENTRADA
-    unsigned long NValue = 0;
-    int dValue = 0;
-    char *iValue = NULL;
-    char *oValue = NULL;
-    get_opt(argc, argv, &iValue, &oValue, &NValue, &dValue);
+    char *name_file = NULL;
+    char *output_name_file = NULL;
+    unsigned long size;
+    int threads;
+    int levels;
+    int dValue;
+    if (get_opt(argc, argv, &name_file, &output_name_file, &size, &dValue, &threads, &levels) == 0)
+        return 0;
 
+    float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
+    read_file(name_file, numbers, size);                               // LEER ARCHIVO
+    
     for (int i = 0; i < 20; i++)
     {
-        // VARIABLES A UTILIZAR
-        List *list = list_init(NValue);
-        List *list_sorted = list_create();
-        clock_t t;
-        double time_taken;
-
-        read_file(iValue, list->data, list->len); // LEER ARCHIVO
-        t = clock();
-        //print_float_array(list->data,list->len);
-        simd_sort(list, list_sorted, dValue); //ORDENAR LOS VALORES
-        t = clock() - t;
-        time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
-        printf("TEST %d : simd_sort() took %f seconds to execute \n", i, time_taken);
-
-        // LIBERAR MEMORIA
-        list_free(list);
-        list_free(list_sorted);
+        clock_t t = clock();                                               // SE COMIENZA A MEDIR EL TIEMPO
+        omp_sort(numbers, size, levels, threads);                          // SORT THE NUMBERS
+        double time_taken = ((double)(clock() - t)) / CLOCKS_PER_SEC;      // SE TERMINA DE MEDIR EL TIEMPO
+        write_file(output_name_file, numbers, size);                       //ESCRIBIR LOS DATOS ORDENADOS
+        printf("simd_sort() took %f seconds to execute \n", time_taken);
     }
+    
+    free(numbers);                                                     // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
     return 0;
 }
