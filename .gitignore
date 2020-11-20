@@ -50,14 +50,19 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# exe
+sort
+test
+
+# outputs
 *.csv
 *.raw
+
+# inputs
 !16floats.raw
 !64floats.raw
 !65536floats.raw
 !16floatssorted.raw
 !64floatssorted.raw
 !65536floatssorted.raw
-
-sort
-test
