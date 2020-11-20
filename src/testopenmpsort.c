@@ -13,21 +13,12 @@ int main(int argc, char *argv[])
     int dValue;
     if (get_opt(argc, argv, &name_file, &output_name_file, &size, &dValue, &levels, &threads) == 0)
         return 0;
-    /*
-    printf("name_file: %s\n", name_file);
-    printf("output_name_file: %s\n", output_name_file);
-    printf("size %lu\n", size);
-    printf("threads: %d\n", threads);
-    printf("levels: %d\n", levels);
-    printf("dValue: %d\n", dValue);
-    */
     clock_t t;
     double time_taken;
 
     int iterations = 31;
     double *times = (double *)malloc(sizeof(double) * iterations);
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
-    printf("Inicio %s\n", output_name_file);
     for (int i = 0; i < iterations; i++)
     {
         read_file(name_file, numbers, size);                          // LEER ARCHIVO
