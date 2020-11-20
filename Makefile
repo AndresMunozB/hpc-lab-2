@@ -30,29 +30,29 @@ clean:
 
 run:
 	@ echo "Running sort..."
-	@ ./bin/sort.out -i ./data/160000floats.raw -o 160000floatssorted.raw -N 160000l -d 1 -l 2 -h 4
+	@ ./bin/sort.out -i ./data/16777216.raw -o 16777216sorted.raw -N 16777216l -d 1 -l 20 -h 1
 
 run_testsimdsort:
 	@ echo "Running testopenmpsort..."
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_1h.csv -N 160000l -d 1 -l 2 -h 1
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_4h.csv -N 160000l -d 1 -l 2 -h 4
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_20h.csv -N 160000l -d 1 -l 2 -h 10
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_50h.csv -N 160000l -d 1 -l 2 -h 15
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_1h.csv -N 160000l -d 1 -l 2 -h 1
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_4h.csv -N 160000l -d 1 -l 2 -h 4
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_10h.csv -N 160000l -d 1 -l 2 -h 10
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_2l_15h.csv -N 160000l -d 1 -l 2 -h 15
 
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_1h.csv -N 160000l -d 1 -l 3 -h 1
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_4h.csv -N 160000l -d 1 -l 3 -h 4
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_20h.csv -N 160000l -d 1 -l 3 -h 10
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_50h.csv -N 160000l -d 1 -l 3 -h 15
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_1h.csv -N 160000l -d 1 -l 3 -h 1
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_4h.csv -N 160000l -d 1 -l 3 -h 4
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_10h.csv -N 160000l -d 1 -l 3 -h 10
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_3l_15h.csv -N 160000l -d 1 -l 3 -h 15
 
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_1h.csv -N 160000l -d 1 -l 4 -h 1
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_4h.csv -N 160000l -d 1 -l 4 -h 4
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_20h.csv -N 160000l -d 1 -l 4 -h 10
-	#@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_50h.csv -N 160000l -d 1 -l 4 -h 15
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_1h.csv -N 160000l -d 1 -l 4 -h 1
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_4h.csv -N 160000l -d 1 -l 4 -h 4
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_10h.csv -N 160000l -d 1 -l 4 -h 10
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_4l_15h.csv -N 160000l -d 1 -l 4 -h 15
 
 	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_1h.csv -N 160000l -d 1 -l 5 -h 1
 	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_4h.csv -N 160000l -d 1 -l 5 -h 4
-	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_20h.csv -N 160000l -d 1 -l 5 -h 10
-	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_50h.csv -N 160000l -d 1 -l 5 -h 15
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_10h.csv -N 160000l -d 1 -l 5 -h 10
+	@ ./bin/testopenmpsort.out -i ./data/160000floats.raw -o 160000_5l_15h.csv -N 160000l -d 1 -l 5 -h 15
 
 start_sort: clean compilation run
 

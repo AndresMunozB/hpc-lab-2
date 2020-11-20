@@ -10,6 +10,5 @@ void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4);
 void simd_sort(float* numbers, unsigned long size);
 void multiway_sort(float* numbers, unsigned long size);
 void omp_sort(float *array, unsigned long size, int levels, int threads);
-void sort_aux(float *array, unsigned long size, int levels);
-
+void sort_aux(float *array, unsigned long size, int levels, int task);
 #endif

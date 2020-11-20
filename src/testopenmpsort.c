@@ -22,25 +22,21 @@ int main(int argc, char *argv[])
     printf("dValue: %d\n", dValue);
     */
 
-    int iterations = 10;
+    int iterations = 101;
     double *times = (double *)malloc(sizeof(double) * iterations);
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
+    printf("Inicio %s\n", output_name_file);
     for (int i = 0; i < iterations; i++)
     {
-        printf("TEST #%d\n",i);
-        clock_t t = clock();                 // SE COMIENZA A MEDIR EL TIEMPO
-        read_file(name_file, numbers, size); // LEER ARCHIVO
-        printf("    omp_sort\n");
-        printf("    levels: %d\n", levels);
-        printf("    threads: %d\n", threads);
+        clock_t t = clock();                                          // SE COMIENZA A MEDIR EL TIEMPO
+        read_file(name_file, numbers, size);                          // LEER ARCHIVO
         omp_sort(numbers, size, levels, threads);                     // SORT THE NUMBERS
         double time_taken = ((double)(clock() - t)) / CLOCKS_PER_SEC; // SE TERMINA DE MEDIR EL TIEMPO
         times[i] = time_taken;
-        printf("TEST #%d: simd_sort() took %f seconds to execute \n", i, time_taken);
+        printf("TEST #%d: simd_sort() took %f seconds to execute \n", i+1, time_taken);
     }
     write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
-    printf("\n");
-    printf("Termino .. %s \n \n", output_name_file);
+    printf("\n\n");
     free(numbers); // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
     free(times);
     return 0;
