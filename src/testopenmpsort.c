@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     printf("dValue: %d\n", dValue);
     */
 
-    int iterations = 101;
+    int iterations = 31;
     double *times = (double *)malloc(sizeof(double) * iterations);
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
     printf("Inicio %s\n", output_name_file);

@@ -25,4 +25,5 @@ void create_file(char *file_name, unsigned long size)
 int main()
 {
     create_file("16777216.raw",16777216l);
+    //create_file("16000000.raw",16000000l);
 }

@@ -181,14 +181,15 @@ void merge(float *numbers, unsigned long size)
 
 void omp_sort(float *array, unsigned long size, int levels, int threads)
 {
-    int task = 0;
     omp_set_num_threads(threads);
-#pragma omp parallel
-#pragma omp single nowait
-    sort_aux(array, size, levels, task);
+    #pragma omp parallel
+    {
+        #pragma omp single nowait
+        sort_aux(array, size, levels);
+    }
 }
 
-void sort_aux(float *array, unsigned long size, int levels, int task)
+void sort_aux(float *array, unsigned long size, int levels)
 {
     if (levels == 0) //CASO BORDE
     {
@@ -198,14 +199,14 @@ void sort_aux(float *array, unsigned long size, int levels, int task)
     }
     unsigned long half = size / 2;
 
-#pragma omp task untied //ORDENAR MITAD IZQUIERDA
+    #pragma omp task untied //ORDENAR MITAD IZQUIERDA
     {
-        sort_aux(array, half, levels - 1, task + 1);
+        sort_aux(array, half, levels - 1);
     }
-#pragma omp task untied //ORDENAR MITAD DERECHA
+    #pragma omp task untied //ORDENAR MITAD DERECHA
     {
-        sort_aux(array + half, half, levels - 1, task + 2);
+        sort_aux(array + half, half, levels - 1);
     }
-#pragma omp taskwait
+    #pragma omp taskwait
     merge(array, size);
 }
