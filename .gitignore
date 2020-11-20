@@ -52,5 +52,12 @@ Mkfile.old
 dkms.conf
 *.csv
 *.raw
+!16floats.raw
+!64floats.raw
+!65536floats.raw
+!16floatssorted.raw
+!64floatssorted.raw
+!65536floatssorted.raw
+
 sort
 test

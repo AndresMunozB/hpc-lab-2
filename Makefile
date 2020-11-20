@@ -2,6 +2,11 @@ INC_DIRS = -Iinclude
 CFLAGS = -Wall -c
 FOPENMP = -fopenmp
 
+# ./sort -i 16floats.raw -o 16floatssorted2.raw -N 16 -d 1 -l 2 -h 2
+# ./sort -i 64floats.raw -o 64floatssorted2.raw -N 64 -d 1 -l 2 -h 2
+# ./sort -i 65536floats.raw -o 65536floatssorted2.raw -N 65536 -d 1 -l 2 -h 2
+
+
 compilation: obj/functions.o obj/heap.o obj/list.o obj/main.o obj/testopenmpsort.o
 	@ gcc -o sort obj/main.o obj/functions.o obj/heap.o obj/utils.o $(FOPENMP)
 	@ gcc -o test obj/testopenmpsort.o obj/functions.o obj/heap.o obj/utils.o $(FOPENMP)
@@ -26,7 +31,9 @@ clean:
 	@ rm -rf *.csv
 
 run:
-	@ ./sort -i 16floats.raw -o 16floatssorted.raw -N 16 -d 1 -l 2 -h 1
+	#@ ./sort -i 16floats.raw -o 16floatssorted2.raw -N 16 -d 1 -l 2 -h 1
+	#@ ./sort -i 64floats.raw -o 64floatssorted2.raw -N 64 -d 1 -l 2 -h 2
+	@ ./sort -i 65536floats.raw -o 65536floatssorted2.raw -N 65536 -d 1 -l 2 -h 2
 
 run_test_16:
 	@ ./test -i 16floats.raw -o 16_2l_1h.csv -N 16 -d 1 -l 2 -h 1
