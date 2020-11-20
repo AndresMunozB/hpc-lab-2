@@ -29,11 +29,19 @@ obj/testopenmpsort.o: src/testopenmpsort.c
 clean:
 	@ rm -rf obj/*
 	@ rm -rf *.csv
+	@ rm -rf sort
+	@ rm -rf test
 
 run:
-	#@ ./sort -i 16floats.raw -o 16floatssorted2.raw -N 16 -d 1 -l 2 -h 1
-	#@ ./sort -i 64floats.raw -o 64floatssorted2.raw -N 64 -d 1 -l 2 -h 2
+	@ ./sort -i 16floats.raw -o 16floatssorted2.raw -N 16 -d 1 -l 2 -h 1
+	@ ./sort -i 64floats.raw -o 64floatssorted2.raw -N 64 -d 1 -l 2 -h 2
 	@ ./sort -i 65536floats.raw -o 65536floatssorted2.raw -N 65536 -d 1 -l 2 -h 2
+
+diff:
+	@ diff  16floatssorted2.raw 16floatssorted.raw 
+	@ diff  64floatssorted2.raw 64floatssorted.raw 
+	@ diff  65536floatssorted2.raw 65536floatssorted.raw 
+start: clean compilation run
 
 run_test_16:
 	@ ./test -i 16floats.raw -o 16_2l_1h.csv -N 16 -d 1 -l 2 -h 1
