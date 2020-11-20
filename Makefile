@@ -26,11 +26,12 @@ clean:
 	@ rm -rf obj/*
 	@ rm -rf bin/*
 	@ rm -rf output/*
+	@ rm -rf *.csv
 	@ echo "Clean success"
 
 run:
 	@ echo "Running sort..."
-	@ ./bin/sort -i ./data/prueba.raw -o 1.raw -N 16777216 -d 1 -l 2 -h 3
+	@ ./bin/sort -i ./data/16floats.raw -o 16floatssorted.raw -N 16 -d 1 -l 2 -h 1
 
 run_test_16:
 	@ echo "Running testopenmpsort..."

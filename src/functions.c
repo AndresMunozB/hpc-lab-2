@@ -185,13 +185,17 @@ void omp_sort(float *array, unsigned long size, int levels, int threads)
     #pragma omp parallel
     {
         #pragma omp single nowait
-        sort_aux(array, size, levels);
+        {  
+            sort_aux(array, size, levels);
+        }
     }
 }
 
 void sort_aux(float *array, unsigned long size, int levels)
 {
-    if (levels == 0) //CASO BORDE
+    if (size < 16)
+        printf("aca\n");
+    if (levels == 0 || size <= 16) //CASO BORDE
     {
         simd_sort(array, size);
         multiway_sort(array, size);

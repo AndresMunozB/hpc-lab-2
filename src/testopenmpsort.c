@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
     printf("levels: %d\n", levels);
     printf("dValue: %d\n", dValue);
     */
+    clock_t t;
+    double time_taken;
 
     int iterations = 31;
     double *times = (double *)malloc(sizeof(double) * iterations);
@@ -28,10 +30,10 @@ int main(int argc, char *argv[])
     printf("Inicio %s\n", output_name_file);
     for (int i = 0; i < iterations; i++)
     {
-        clock_t t = clock();                                          // SE COMIENZA A MEDIR EL TIEMPO
         read_file(name_file, numbers, size);                          // LEER ARCHIVO
+        t = clock();                                          // SE COMIENZA A MEDIR EL TIEMPO
         omp_sort(numbers, size, levels, threads);                     // SORT THE NUMBERS
-        double time_taken = ((double)(clock() - t)) / CLOCKS_PER_SEC; // SE TERMINA DE MEDIR EL TIEMPO
+        time_taken = ((double)(clock() - t)) / CLOCKS_PER_SEC; // SE TERMINA DE MEDIR EL TIEMPO
         times[i] = time_taken;
         printf("TEST #%d: simd_sort() took %f seconds to execute \n", i+1, time_taken);
     }
