@@ -193,8 +193,6 @@ void omp_sort(float *array, unsigned long size, int levels, int threads)
 
 void sort_aux(float *array, unsigned long size, int levels)
 {
-    if (size < 16)
-        printf("aca\n");
     if (levels == 0 || size <= 16) //CASO BORDE
     {
         simd_sort(array, size);
