@@ -127,9 +127,8 @@ void simd_sort(float *numbers, unsigned long size)
 
 void multiway_sort(float *numbers, unsigned long size)
 {
-    float numbers_aux[size];
-    int flags[size];
-    memset(flags, 0, sizeof(flags));
+    float *numbers_aux = (float *)malloc(sizeof(float) * size);
+    int *flags = (int *)calloc(size, sizeof(int));
     unsigned long index = 0l;
     Heap *heap = heap_create((size / 16) + 16); // SI SIZE ES MENOR QUE 16 RETORNA 0 (ERROR DE MEMORIA)
     Item item_aux;
@@ -138,7 +137,6 @@ void multiway_sort(float *numbers, unsigned long size)
         heap_insert(heap, item_create(numbers[i], i));
         flags[i] = 1;
     }
-
     while (heap->last != 0)
     {
         item_aux = heap_pop(heap);
@@ -147,15 +145,17 @@ void multiway_sort(float *numbers, unsigned long size)
         if (item_aux.block + 1 < size && !flags[item_aux.block + 1])
             heap_insert(heap, item_create(numbers[item_aux.block + 1], item_aux.block + 1));
     }
-
     for (unsigned long i = 0; i < size; i++)
         numbers[i] = numbers_aux[i];
+
     heap_free(heap);
+    free(numbers_aux);
+    free(flags);
 }
 
 void merge(float *numbers, unsigned long size)
 {
-    float numbers_aux[size];
+    float *numbers_aux = (float *)malloc(sizeof(float) * size);
     unsigned long half = size / 2;
     unsigned long left_count = 0;
     unsigned long right_count = half;
@@ -175,20 +175,18 @@ void merge(float *numbers, unsigned long size)
 
     for (unsigned long i = 0; i < size; i++)
         numbers[i] = numbers_aux[i];
-
+    free(numbers_aux);
     return;
 }
 
 void omp_sort(float *array, unsigned long size, int levels, int threads)
 {
     omp_set_num_threads(threads);
-    #pragma omp parallel
-    {
-        #pragma omp single nowait
-        {  
-            sort_aux(array, size, levels);
-        }
-    }
+    printf("levels: %d\n", levels);
+    printf("threads: %d\n", threads);
+#pragma omp parallel
+#pragma omp single nowait
+    sort_aux(array, size, levels);
 }
 
 void sort_aux(float *array, unsigned long size, int levels)
@@ -196,19 +194,21 @@ void sort_aux(float *array, unsigned long size, int levels)
     if (levels == 0 || size <= 16) //CASO BORDE
     {
         simd_sort(array, size);
+
         multiway_sort(array, size);
+
         return;
     }
     unsigned long half = size / 2;
 
-    #pragma omp task untied //ORDENAR MITAD IZQUIERDA
+#pragma omp task untied //ORDENAR MITAD IZQUIERDA
     {
         sort_aux(array, half, levels - 1);
     }
-    #pragma omp task untied //ORDENAR MITAD DERECHA
+#pragma omp task untied //ORDENAR MITAD DERECHA
     {
         sort_aux(array + half, half, levels - 1);
     }
-    #pragma omp taskwait
+#pragma omp taskwait
     merge(array, size);
 }
