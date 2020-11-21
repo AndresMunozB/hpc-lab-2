@@ -92,22 +92,22 @@ run_test_65536:
 	@ ./test -i 16000000.raw -o 16000000_2l_10h.csv -N 16000000 -d 1 -l 2 -h 10
 
 
-	#@ ./test -i 65536floats.raw -o 65536_2l_1h.csv -N 65536 -d 1 -l 2 -h 1
-	#@ ./test -i 65536floats.raw -o 65536_2l_4h.csv -N 65536 -d 1 -l 2 -h 4
-	#@ ./test -i 65536floats.raw -o 65536_2l_10h.csv -N 65536 -d 1 -l 2 -h 10
-	#@ ./test -i 65536floats.raw -o 65536_2l_15h.csv -N 65536 -d 1 -l 2 -h 15
+	@ ./test -i 65536floats.raw -o 65536_2l_1h.csv -N 65536 -d 1 -l 2 -h 1
+	@ ./test -i 65536floats.raw -o 65536_2l_4h.csv -N 65536 -d 1 -l 2 -h 4
+	@ ./test -i 65536floats.raw -o 65536_2l_10h.csv -N 65536 -d 1 -l 2 -h 10
+	@ ./test -i 65536floats.raw -o 65536_2l_15h.csv -N 65536 -d 1 -l 2 -h 15
 
-	#@ ./test -i 65536floats.raw -o 65536_3l_1h.csv -N 65536 -d 1 -l 3 -h 1
-	#@ ./test -i 65536floats.raw -o 65536_3l_4h.csv -N 65536 -d 1 -l 3 -h 4
-	#@ ./test -i 65536floats.raw -o 65536_3l_10h.csv -N 65536 -d 1 -l 3 -h 10
-	#@ ./test -i 65536floats.raw -o 65536_3l_15h.csv -N 65536 -d 1 -l 3 -h 15
+	@ ./test -i 65536floats.raw -o 65536_3l_1h.csv -N 65536 -d 1 -l 3 -h 1
+	@ ./test -i 65536floats.raw -o 65536_3l_4h.csv -N 65536 -d 1 -l 3 -h 4
+	@ ./test -i 65536floats.raw -o 65536_3l_10h.csv -N 65536 -d 1 -l 3 -h 10
+	@ ./test -i 65536floats.raw -o 65536_3l_15h.csv -N 65536 -d 1 -l 3 -h 15
 
-	#@ ./test -i 65536floats.raw -o 65536_4l_1h.csv -N 65536 -d 1 -l 4 -h 1
-	#@ ./test -i 65536floats.raw -o 65536_4l_4h.csv -N 65536 -d 1 -l 4 -h 4
-	#@ ./test -i 65536floats.raw -o 65536_4l_10h.csv -N 65536 -d 1 -l 4 -h 10
-	#@ ./test -i 65536floats.raw -o 65536_4l_15h.csv -N 65536 -d 1 -l 4 -h 15
+	@ ./test -i 65536floats.raw -o 65536_4l_1h.csv -N 65536 -d 1 -l 4 -h 1
+	@ ./test -i 65536floats.raw -o 65536_4l_4h.csv -N 65536 -d 1 -l 4 -h 4
+	@ ./test -i 65536floats.raw -o 65536_4l_10h.csv -N 65536 -d 1 -l 4 -h 10
+	@ ./test -i 65536floats.raw -o 65536_4l_15h.csv -N 65536 -d 1 -l 4 -h 15
 
-	#@ ./test -i 65536floats.raw -o 65536_5l_1h.csv -N 65536 -d 1 -l 5 -h 1
-	#@ ./test -i 65536floats.raw -o 65536_5l_4h.csv -N 65536 -d 1 -l 5 -h 4
-	#@ ./test -i 65536floats.raw -o 65536_5l_10h.csv -N 65536 -d 1 -l 5 -h 10
-	#@ ./test -i 65536floats.raw -o 65536_5l_15h.csv -N 65536 -d 1 -l 5 -h 15
+	@ ./test -i 65536floats.raw -o 65536_5l_1h.csv -N 65536 -d 1 -l 5 -h 1
+	@ ./test -i 65536floats.raw -o 65536_5l_4h.csv -N 65536 -d 1 -l 5 -h 4
+	@ ./test -i 65536floats.raw -o 65536_5l_10h.csv -N 65536 -d 1 -l 5 -h 10
+	@ ./test -i 65536floats.raw -o 65536_5l_15h.csv -N 65536 -d 1 -l 5 -h 15

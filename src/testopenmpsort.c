@@ -14,20 +14,22 @@ int main(int argc, char *argv[])
     if (get_opt(argc, argv, &name_file, &output_name_file, &size, &dValue, &levels, &threads) == 0)
         return 0;
 
-    int iterations = 1;
+    int iterations = 151;
     double *times = (double *)malloc(sizeof(double) * iterations);
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
     for (int i = 0; i < iterations; i++)
     {
-        clock_t t_ini, t_fin;
-        double secs;
-        read_file(name_file, numbers, size);      // LEER ARCHIVO
-        t_ini = clock();                          // SE COMIENZA A MEDIR EL TIEMPO
+
+        read_file(name_file, numbers, size); // LEER ARCHIVO
+        struct timespec begin, end;
+        clock_gettime(CLOCK_REALTIME, &begin);
         omp_sort(numbers, size, levels, threads); // SORT THE NUMBERS
-        t_fin = clock();
-        secs = (double)(t_fin - t_ini) / CLOCKS_PER_SEC; // SE TERMINA DE MEDIR EL TIEMPO
-        times[i] = secs;
-        printf("TEST #%d: simd_sort() took %f seconds to execute \n", i + 1, secs);
+        clock_gettime(CLOCK_REALTIME, &end);
+        long seconds = end.tv_sec - begin.tv_sec;
+        long nanoseconds = end.tv_nsec - begin.tv_nsec;
+        double elapsed = seconds + nanoseconds * 1e-9;
+        printf("Time measured: %.3f seconds.\n", elapsed);
+        times[i] = elapsed;
     }
     write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
     printf("\n\n");
