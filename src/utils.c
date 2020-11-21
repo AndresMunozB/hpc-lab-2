@@ -18,6 +18,7 @@ void write_file(char *file_name, float *array, unsigned long size)
 void write_file_normal(char *file_name, double *array, unsigned long size)
 {
     FILE *output_file = fopen(file_name, "w"); // Abrir archivo
+    fprintf(output_file, "%s\n", "time");
     for (int i = 0 ; i < size ; i++)
         fprintf(output_file, "%f\n", array[i]);
     fclose(output_file); //Cerrar archivo

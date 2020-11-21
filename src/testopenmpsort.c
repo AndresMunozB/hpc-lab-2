@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     clock_t t;
     double time_taken;
 
-    int iterations = 31;
+    int iterations = 151;
     double *times = (double *)malloc(sizeof(double) * iterations);
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
     for (int i = 0; i < iterations; i++)
