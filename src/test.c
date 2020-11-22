@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     int iterations = 31;
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
-    for (int z = 2; z < 20; z++)
+    for (int z = 0; z < 20; z++)
     {
         for (int j = 1; j < 40; j+=4)
         {
