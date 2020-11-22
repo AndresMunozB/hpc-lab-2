@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
         long seconds = end.tv_sec - begin.tv_sec;
         long nanoseconds = end.tv_nsec - begin.tv_nsec;
         double elapsed = seconds + nanoseconds * 1e-9;
-        printf("TEST #%d: Time measured: %.3f seconds. (%s) %dL %dT\n", i + i, elapsed,  name_file, levels, threads);
+        printf("TEST #%d: Time measured: %.3f seconds. (%s) %dL %dT\n", i, elapsed,  name_file, levels, threads);
         times[i] = elapsed;
     }
     write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
