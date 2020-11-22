@@ -28,7 +28,6 @@ def append_data(data,threads,filename):
         file.write(""+str(threads)+","+str(i)+"\n")
     file.close()
     
-
 def unify_data(name_list,outputfile):
     file = open(outputfile, 'a+')
     file.write("threads,time\n")
@@ -53,13 +52,50 @@ def mean(names,name_out):
         file_out.write(name[0] + "," + str(name[1]) + "," + str(name[2]) + "," + str(mean) + "\n")
     file_out.close()
 
-def graph(name):
-    data = read_file(name)
-    print(data)
+def graph_lineplot(data,x,y,filename,title):
+    ax = sns.lineplot(data=data, x=x, y=y, legend=True)
+    ax.figure.savefig(filename+".jpeg",format='jpeg')
+    plt.clf()
 
+def graph_lineplot3(data,x,y,filename,title,hue):
+    ax = sns.lineplot(data=data, x=x, y=y , hue=hue,style="levels")
+    ax.figure.savefig(filename+".jpeg",format='jpeg')
+    plt.clf()
+
+def graph_levels(name,levels,aux):
+    data = read_file(name)
+    for i in range(0,levels):
+        data2 = data.query("levels == " + str(i))
+        data2['speedup'] = aux / data2['mean'] 
+        graph_lineplot(data2,data2['threads'],data2['speedup'],"Nivel_" + str(i) + "_grafico","Nivel_" + str(i))
+    plt.clf()
+
+def graph_levels2(name,levels,aux):
+    data = read_file(name)
+    for i in range(0,levels):
+        data2 = data.query("levels == " + str(i))
+        data2['speedup'] = aux / data2['mean'] 
+        #graph_lineplot(data2,data2['threads'],data2['speedup'],"Nivel_" + str(i) + "_grafico","Nivel_" + str(i))
+        sns.lineplot(data=data2, x = data2['threads'],y = data2['speedup'], hue = "threads")
+    plt.show()
+    plt.clf()
+
+def graph_threads(name,threads,aux):
+    data = read_file(name)
+    for i in threads:
+        data2 = data.query("threads == " + str(i))
+        data2['speedup'] = aux / data2['mean'] 
+        graph_lineplot(data2,data2['levels'],data2['speedup'],"Threads_" + str(i) + "_grafico","Threads_" + str(i))
+
+    
 threads = [1,5,9,13,17,21,25,29,33,37,41]
 levels = 20
 file_out = "promedios.csv"
-name_list = get_name_list("64",levels,threads)
+name_list = get_name_list("2097152",levels,threads)
 mean(name_list,file_out)
-graph(file_out)
+#graph_levels(file_out,levels,1925.771636)
+#graph_levels2(file_out,levels,1925.771636) 
+data = read_file(file_out)
+data['speedup'] = 1925.771636 / data['mean']
+print(data)
+graph_lineplot3(data,data['levels'],data['speedup'],"prueba","asdasdasd","threads")
