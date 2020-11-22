@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
                 read_file(name_file, numbers, size); // LEER ARCHIVO
                 struct timespec begin, end;
                 clock_gettime(CLOCK_REALTIME, &begin);
-                omp_sort(numbers, size, levels, threads); // SORT THE NUMBERS
+                omp_sort(numbers, size, z, j); // SORT THE NUMBERS
                 clock_gettime(CLOCK_REALTIME, &end);
                 long seconds = end.tv_sec - begin.tv_sec;
                 long nanoseconds = end.tv_nsec - begin.tv_nsec;
