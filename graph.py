@@ -12,8 +12,8 @@ def graph_data(x,y):
     plt.show()
 
 def graph_boxplot(data, filename, title, evaluation_criteria):
-    ax = sns.boxplot(x='instance', y= evaluation_criteria, data= data, palette = "BuGn_r")
-    ax = sns.swarmplot(x="instance", y= evaluation_criteria, data= data, color=".25")
+    ax = sns.boxplot(x='threads', y= evaluation_criteria, data= data, palette = "BuGn_r")
+    ax = sns.swarmplot(x="threads", y= evaluation_criteria, data= data, color=".25")
     ax.set_title(title)
     ax.figure.savefig(filename,format='jpeg')
     plt.clf()
@@ -57,12 +57,13 @@ plt.show()'''
 def get_name_list(base, levels, threads):
     names = []
     for i in threads:
-        names.append(base+"_"+str(levels)+"l"+"_"+str(i)+"h.csv")
+        names.append([base+"_"+str(levels)+"l"+"_"+str(i)+"h.csv",i])
     return names
  
 threads = [1,5,10,15,20,25,30,35]
 name_list = get_name_list("16000000",2,threads)
-unify_data(name_list,"2_levels.csv")
+#unify_data(name_list,"2_levels.csv")
 data = read_file("2_levels.csv")
+graph_boxplot(data, "boxplot.jpeg", "title", "time")
 graph_barplot(data,"threads", "time", "barplot2")
 
