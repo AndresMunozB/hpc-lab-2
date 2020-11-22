@@ -54,9 +54,8 @@ dkms.conf
 # exe
 sort
 test
-
+newfile
 # outputs
-*.csv
 *.raw
 
 # inputs
