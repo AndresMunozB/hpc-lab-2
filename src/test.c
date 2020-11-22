@@ -14,13 +14,13 @@ int main(int argc, char *argv[])
     if (get_opt(argc, argv, &name_file, &output_name_file, &size, &dValue, &levels, &threads) == 0)
         return 0;
 
-    int iterations = 101;
-    double *times = (double *)malloc(sizeof(double) * iterations);
+    int iterations = 1;
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
-    for (int i = 0; i < levels; i++)
+    for (int z = 2; z < 20; z++)
     {
-        for (int j = 0; j < threads; j++)
+        for (int j = 1; j < 40; j+=4)
         {
+            double *times = (double *)malloc(sizeof(double) * iterations);
             for (int i = 0; i < iterations; i++)
             {
                 read_file(name_file, numbers, size); // LEER ARCHIVO
@@ -31,14 +31,16 @@ int main(int argc, char *argv[])
                 long seconds = end.tv_sec - begin.tv_sec;
                 long nanoseconds = end.tv_nsec - begin.tv_nsec;
                 double elapsed = seconds + nanoseconds * 1e-9;
-                printf("TEST #%d: Time measured: %.3f seconds. (%s) %dL %dT\n", i, elapsed, name_file, levels, threads);
+                printf("TEST #%d: Time measured: %.3f seconds. (%s) %dL %dT\n", i, elapsed, name_file, z, j);
                 times[i] = elapsed;
             }
+            sprintf(output_name_file, "%lu_%dl_%dh.csv", size, z, j);
+            printf("%s\n", output_name_file);
             write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
+            free(times);
         }
     }
 
     free(numbers); // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
-    free(times);
     return 0;
 }

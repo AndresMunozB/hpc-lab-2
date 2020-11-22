@@ -90,14 +90,14 @@ test: clean compilation run_test_1m_6k
 run_test_1m_6k:
 	# 2 LEVELS
 	@ echo "Running..."
-	@ ./test -i 1600000floats.raw -o 1600000_2l_1h.csv -N 1600000 -d 1 -l 2 -h 1
-	@ ./test -i 1600000floats.raw -o 1600000_2l_5h.csv -N 1600000 -d 1 -l 2 -h 5
-	@ ./test -i 1600000floats.raw -o 1600000_2l_10h.csv -N 1600000 -d 1 -l 2 -h 10
-	@ ./test -i 1600000floats.raw -o 1600000_2l_15h.csv -N 1600000 -d 1 -l 2 -h 15
-	@ ./test -i 1600000floats.raw -o 1600000_2l_20h.csv -N 1600000 -d 1 -l 2 -h 20
-	@ ./test -i 1600000floats.raw -o 1600000_2l_25h.csv -N 1600000 -d 1 -l 2 -h 25
-	@ ./test -i 1600000floats.raw -o 1600000_2l_30h.csv -N 1600000 -d 1 -l 2 -h 30
-	@ ./test -i 1600000floats.raw -o 1600000_2l_35h.csv -N 1600000 -d 1 -l 2 -h 35
+	@ ./test -i 1600000floats.raw -o 1600000_ -N 1600000 -d 1 -l 2 -h 1
+	@ ./test -i 1600000floats.raw -o 1600000_ -N 1600000 -d 1 -l 2 -h 5
+	@ ./test -i 1600000floats.raw -o 1600000_ -N 1600000 -d 1 -l 2 -h 10
+	@ ./test -i 1600000floats.raw -o 1600000_ -N 1600000 -d 1 -l 2 -h 15
+	@ ./test -i 1600000floats.raw -o 1600000_ -N 1600000 -d 1 -l 2 -h 20
+	@ ./test -i 1600000floats.raw -o 1600000_ -N 1600000 -d 1 -l 2 -h 25
+	@ ./test -i 1600000floats.raw -o 1600000_ -N 1600000 -d 1 -l 2 -h 30
+	@ ./test -i 1600000floats.raw -o 1600000_ -N 1600000 -d 1 -l 2 -h 35
 	
 
 run_test_65536:
