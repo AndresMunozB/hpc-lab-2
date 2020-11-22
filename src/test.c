@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     if (get_opt(argc, argv, &name_file, &output_name_file, &size, &dValue, &levels, &threads) == 0)
         return 0;
 
-    int iterations = 31;
+    int iterations = 21;
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
     for (int z = 0; z < 20; z++)
     {
