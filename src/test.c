@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     if (get_opt(argc, argv, &name_file, &output_name_file, &size, &dValue, &levels, &threads) == 0)
         return 0;
 
-    int iterations = 151;
+    int iterations = 31;
     double *times = (double *)malloc(sizeof(double) * iterations);
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
     for (int i = 0; i < iterations; i++)
@@ -28,12 +28,11 @@ int main(int argc, char *argv[])
         long seconds = end.tv_sec - begin.tv_sec;
         long nanoseconds = end.tv_nsec - begin.tv_nsec;
         double elapsed = seconds + nanoseconds * 1e-9;
-        printf("Time measured: %.3f seconds.\n", elapsed);
+        printf("TEST #%d: Time measured: %.3f seconds. (%s) %dL %dT\n", i + i, elapsed,  name_file, levels, threads);
         times[i] = elapsed;
     }
     write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
-    printf("\n\n");
-    free(numbers); // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
+    free(numbers);                                          // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
     free(times);
     return 0;
 }
