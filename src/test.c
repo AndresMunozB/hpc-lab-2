@@ -18,8 +18,9 @@ int main(int argc, char *argv[])
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
     for (int z = 0; z < 20; z++)
     {
-        for (int j = 1; j < 40; j+=4)
+        for (int j = 1; j < 42; j+=4)
         {
+
             double *times = (double *)malloc(sizeof(double) * iterations);
             for (int i = 0; i < iterations; i++)
             {
@@ -34,9 +35,10 @@ int main(int argc, char *argv[])
                 printf("TEST #%d: Time measured: %.3f seconds. (%s) %dL %dT\n", i, elapsed, name_file, z, j);
                 times[i] = elapsed;
             }
-            sprintf(output_name_file, "%lu_%dl_%dh.csv", size, z, j);
-            printf("%s\n", output_name_file);
-            write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
+            char output[255];
+            sprintf(output, "%lu_%dl_%dh.csv", size, z, j);
+            printf("%s\n", output);
+            write_file_normal(output, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
             free(times);
         }
     }

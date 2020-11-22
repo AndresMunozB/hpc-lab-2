@@ -55,6 +55,7 @@ dkms.conf
 sort
 test
 newfile
+issorted
 # outputs
 *.raw
 
@@ -65,5 +66,5 @@ newfile
 !16floatssorted.raw
 !64floatssorted.raw
 !65536floatssorted.raw
-!160000floats.raw
-!1600000floats.raw
+!2097152floats.raw
+!2097152floatssorted.raw

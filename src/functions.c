@@ -191,10 +191,8 @@ void sort_aux(float *array, unsigned long size, int levels)
 {
     if (levels == 0 || size <= 16) //CASO BORDE
     {
-        simd_sort(array, size);
-
+        simd_sort(array, size); // SI NO ENTRA UN ARREGLO MULTIPLO DE 16 SE
         multiway_sort(array, size);
-
         return;
     }
     unsigned long half = size / 2;
