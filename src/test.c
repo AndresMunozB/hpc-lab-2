@@ -14,25 +14,31 @@ int main(int argc, char *argv[])
     if (get_opt(argc, argv, &name_file, &output_name_file, &size, &dValue, &levels, &threads) == 0)
         return 0;
 
-    int iterations = 31;
+    int iterations = 101;
     double *times = (double *)malloc(sizeof(double) * iterations);
     float *numbers = (float *)aligned_alloc(16, sizeof(float) * size); // SE SOLICITA MEMORIA PARA LOS NUMEROS A ORDENAR
-    for (int i = 0; i < iterations; i++)
+    for (int i = 0; i < levels; i++)
     {
-
-        read_file(name_file, numbers, size); // LEER ARCHIVO
-        struct timespec begin, end;
-        clock_gettime(CLOCK_REALTIME, &begin);
-        omp_sort(numbers, size, levels, threads); // SORT THE NUMBERS
-        clock_gettime(CLOCK_REALTIME, &end);
-        long seconds = end.tv_sec - begin.tv_sec;
-        long nanoseconds = end.tv_nsec - begin.tv_nsec;
-        double elapsed = seconds + nanoseconds * 1e-9;
-        printf("TEST #%d: Time measured: %.3f seconds. (%s) %dL %dT\n", i, elapsed,  name_file, levels, threads);
-        times[i] = elapsed;
+        for (int j = 0; j < threads; j++)
+        {
+            for (int i = 0; i < iterations; i++)
+            {
+                read_file(name_file, numbers, size); // LEER ARCHIVO
+                struct timespec begin, end;
+                clock_gettime(CLOCK_REALTIME, &begin);
+                omp_sort(numbers, size, levels, threads); // SORT THE NUMBERS
+                clock_gettime(CLOCK_REALTIME, &end);
+                long seconds = end.tv_sec - begin.tv_sec;
+                long nanoseconds = end.tv_nsec - begin.tv_nsec;
+                double elapsed = seconds + nanoseconds * 1e-9;
+                printf("TEST #%d: Time measured: %.3f seconds. (%s) %dL %dT\n", i, elapsed, name_file, levels, threads);
+                times[i] = elapsed;
+            }
+            write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
+        }
     }
-    write_file_normal(output_name_file, times, iterations); // ESCRIBIR LOS DATOS ORDENADOS
-    free(numbers);                                          // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
+
+    free(numbers); // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
     free(times);
     return 0;
 }

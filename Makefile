@@ -90,7 +90,7 @@ test: clean compilation run_test_1m_6k
 run_test_1m_6k:
 	# 2 LEVELS
 	@ echo "Running..."
-	@ ./test -i 1600000floats.raw -o 1600000_2l_1h.csv -N 1600000 -d 1 -l 0 -h 1
+	@ ./test -i 1600000floats.raw -o 1600000_2l_1h.csv -N 1600000 -d 1 -l 2 -h 1
 	@ ./test -i 1600000floats.raw -o 1600000_2l_5h.csv -N 1600000 -d 1 -l 2 -h 5
 	@ ./test -i 1600000floats.raw -o 1600000_2l_10h.csv -N 1600000 -d 1 -l 2 -h 10
 	@ ./test -i 1600000floats.raw -o 1600000_2l_15h.csv -N 1600000 -d 1 -l 2 -h 15
@@ -98,51 +98,7 @@ run_test_1m_6k:
 	@ ./test -i 1600000floats.raw -o 1600000_2l_25h.csv -N 1600000 -d 1 -l 2 -h 25
 	@ ./test -i 1600000floats.raw -o 1600000_2l_30h.csv -N 1600000 -d 1 -l 2 -h 30
 	@ ./test -i 1600000floats.raw -o 1600000_2l_35h.csv -N 1600000 -d 1 -l 2 -h 35
-	# 3 LEVELS
-	@ ./test -i 1600000floats.raw -o 1600000_3l_1h.csv -N 1600000 -d 1 -l 3 -h 1
-	@ ./test -i 1600000floats.raw -o 1600000_3l_5h.csv -N 1600000 -d 1 -l 3 -h 5
-	@ ./test -i 1600000floats.raw -o 1600000_3l_10h.csv -N 1600000 -d 1 -l 3 -h 10
-	@ ./test -i 1600000floats.raw -o 1600000_3l_15h.csv -N 1600000 -d 1 -l 3 -h 15
-	@ ./test -i 1600000floats.raw -o 1600000_3l_20h.csv -N 1600000 -d 1 -l 3 -h 20
-	@ ./test -i 1600000floats.raw -o 1600000_3l_25h.csv -N 1600000 -d 1 -l 3 -h 25
-	@ ./test -i 1600000floats.raw -o 1600000_3l_30h.csv -N 1600000 -d 1 -l 3 -h 30
-	@ ./test -i 1600000floats.raw -o 1600000_3l_35h.csv -N 1600000 -d 1 -l 3 -h 35
-	# 4 LEVELS
-	@ ./test -i 1600000floats.raw -o 1600000_4l_1h.csv -N 1600000 -d 1 -l 4 -h 1
-	@ ./test -i 1600000floats.raw -o 1600000_4l_5h.csv -N 1600000 -d 1 -l 4 -h 5
-	@ ./test -i 1600000floats.raw -o 1600000_4l_10h.csv -N 1600000 -d 1 -l 4 -h 10
-	@ ./test -i 1600000floats.raw -o 1600000_4l_15h.csv -N 1600000 -d 1 -l 4 -h 15
-	@ ./test -i 1600000floats.raw -o 1600000_4l_20h.csv -N 1600000 -d 1 -l 4 -h 20
-	@ ./test -i 1600000floats.raw -o 1600000_4l_25h.csv -N 1600000 -d 1 -l 4 -h 25
-	@ ./test -i 1600000floats.raw -o 1600000_4l_30h.csv -N 1600000 -d 1 -l 4 -h 30
-	@ ./test -i 1600000floats.raw -o 1600000_4l_35h.csv -N 1600000 -d 1 -l 4 -h 35
-	# 5 LEVELS
-	@ ./test -i 1600000floats.raw -o 1600000_5l_1h.csv -N 1600000 -d 1 -l 5 -h 1
-	@ ./test -i 1600000floats.raw -o 1600000_5l_5h.csv -N 1600000 -d 1 -l 5 -h 5
-	@ ./test -i 1600000floats.raw -o 1600000_5l_10h.csv -N 1600000 -d 1 -l 5 -h 10
-	@ ./test -i 1600000floats.raw -o 1600000_5l_15h.csv -N 1600000 -d 1 -l 5 -h 15
-	@ ./test -i 1600000floats.raw -o 1600000_5l_20h.csv -N 1600000 -d 1 -l 5 -h 20
-	@ ./test -i 1600000floats.raw -o 1600000_5l_25h.csv -N 1600000 -d 1 -l 5 -h 25
-	@ ./test -i 1600000floats.raw -o 1600000_5l_30h.csv -N 1600000 -d 1 -l 5 -h 30
-	@ ./test -i 1600000floats.raw -o 1600000_5l_35h.csv -N 1600000 -d 1 -l 5 -h 35
-	# 6 LEVELS
-	@ ./test -i 1600000floats.raw -o 1600000_6l_1h.csv -N 1600000 -d 1 -l 6 -h 1
-	@ ./test -i 1600000floats.raw -o 1600000_6l_5h.csv -N 1600000 -d 1 -l 6 -h 5
-	@ ./test -i 1600000floats.raw -o 1600000_6l_10h.csv -N 1600000 -d 1 -l 6 -h 10
-	@ ./test -i 1600000floats.raw -o 1600000_6l_15h.csv -N 1600000 -d 1 -l 6 -h 15
-	@ ./test -i 1600000floats.raw -o 1600000_6l_20h.csv -N 1600000 -d 1 -l 6 -h 20
-	@ ./test -i 1600000floats.raw -o 1600000_6l_25h.csv -N 1600000 -d 1 -l 6 -h 25
-	@ ./test -i 1600000floats.raw -o 1600000_6l_30h.csv -N 1600000 -d 1 -l 6 -h 30
-	@ ./test -i 1600000floats.raw -o 1600000_6l_35h.csv -N 1600000 -d 1 -l 6 -h 35
-	# 7 LEVELS
-	@ ./test -i 1600000floats.raw -o 1600000_7l_1h.csv -N 1600000 -d 1 -l 7 -h 1
-	@ ./test -i 1600000floats.raw -o 1600000_7l_5h.csv -N 1600000 -d 1 -l 7 -h 5
-	@ ./test -i 1600000floats.raw -o 1600000_7l_10h.csv -N 1600000 -d 1 -l 7 -h 10
-	@ ./test -i 1600000floats.raw -o 1600000_7l_15h.csv -N 1600000 -d 1 -l 7 -h 15
-	@ ./test -i 1600000floats.raw -o 1600000_7l_20h.csv -N 1600000 -d 1 -l 7 -h 20
-	@ ./test -i 1600000floats.raw -o 1600000_7l_25h.csv -N 1600000 -d 1 -l 7 -h 25
-	@ ./test -i 1600000floats.raw -o 1600000_7l_30h.csv -N 1600000 -d 1 -l 7 -h 30
-	@ ./test -i 1600000floats.raw -o 1600000_7l_35h.csv -N 1600000 -d 1 -l 7 -h 35
+	
 
 run_test_65536:
 
