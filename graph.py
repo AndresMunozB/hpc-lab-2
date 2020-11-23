@@ -61,12 +61,50 @@ def graph_lineplot(data,x,y,filename,title,hue):
     ax.figure.savefig(filename+".jpeg",format='jpeg')
     plt.clf()
 
+def graficarStatics(data):
+    
+    colors = ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink']
+    count = 0
+    
+    plt.scatter(x = data['threads'], y = data['speedup'],s=15,label='levels')
+    plt.title("prueba")
+    plt.ylabel("speedup")
+    plt.xlabel("threads")
+    plt.legend(loc='best')
+    plt.show()
+
+def prueba1(df):
+    fig,ax = plt.subplots()
+    for k,d in df.groupby('levels'):
+        plt.scatter(d['threads'], d['speedup'], label= "Levels " + str(k))
+        plt.plot(d['threads'], d['speedup'])
+    plt.legend(loc='best')
+    plt.title(" Speedup v/s Threads ")
+    plt.ylabel("Speedup")
+    plt.xlabel("Threads")
+    plt.show()
+    figure.tight_layout()
+
+def prueba2(df):
+    fig,ax = plt.subplots()
+    for k,d in df.groupby('threads'):
+        plt.scatter(d['levels'], d['speedup'], label= "Threads " + str(k))
+        plt.plot(d['levels'], d['speedup'])
+    plt.legend(loc='best')
+    plt.title(" Speedup v/s Levels ")
+    plt.ylabel("Speedup")
+    plt.xlabel("Levels")
+    plt.show()
+    figure.tight_layout()
     
 threads = [1,5,9,13,17,21,25,29,33,37,41]
 levels = 20
 file_out = "promedios.csv"
 name_list = get_name_list("2097152",levels,threads)
+mean(name_list,file_out)
 data = read_file(file_out)
 data['speedup'] = 1925.771636 / data['mean']
-#graph_lineplot(data,data['threads'],data['speedup'],"prueba","asdasdasd","levels")
-#graph_lineplot(data,data['levels'],data['speedup'],"prueba111","123123","threads")
+
+
+prueba1(data)
+#prueba2(data)
