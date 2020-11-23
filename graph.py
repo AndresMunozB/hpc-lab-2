@@ -68,5 +68,5 @@ file_out = "promedios.csv"
 name_list = get_name_list("2097152",levels,threads)
 data = read_file(file_out)
 data['speedup'] = 1925.771636 / data['mean']
-#graph_lineplot(data,data['threads'],data['speedup'],"prueba","asdasdasd","levels")
+graph_lineplot(data,data['threads'],data['speedup'],"prueba","asdasdasd","levels")
 #graph_lineplot(data,data['levels'],data['speedup'],"prueba111","123123","threads")

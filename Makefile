@@ -33,10 +33,10 @@ clean:
 	@ rm -rf test
 
 run:
-	@ ./sort -i 16floats.raw -o 16floatssorted2.raw -N 16 -d 1 -l 30 -h 1
-	@ ./sort -i 64floats.raw -o 64floatssorted2.raw -N 64 -d 1 -l 30 -h 2
-	@ ./sort -i 65536floats.raw -o 65536floatssorted2.raw -N 65536 -d 1 -l 30 -h 2
-	@ ./sort -i 2097152floats.raw -o 2097152floatssorted2.raw -N 2097152 -d 1 -l 30 -h 1
+	@ ./sort -i 16floats.raw -o 16floatssorted2.raw -N 16 -d 0 -l 14 -h 25
+	@ ./sort -i 64floats.raw -o 64floatssorted2.raw -N 64 -d 0 -l 30 -h 2
+	@ ./sort -i 65536floats.raw -o 65536floatssorted2.raw -N 65536 -d 0 -l 30 -h 2
+	@ ./sort -i 2097152floats.raw -o 2097152floatssorted2.raw -N 2097152 -d 0 -l 14 -h 25
 
 diff:
 	@ diff  16floatssorted2.raw 16floatssorted.raw 

@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     write_file(output_name_file, numbers, size);                       //ESCRIBIR LOS DATOS ORDENADOS
     if (dValue)
         printf("sort() took %f seconds to execute \n", time_taken);
+    print_float_array(numbers,size);
     free(numbers); // SE LIBERA LA MEMORIA UTILIZADA PARA LOS NUMEROS
     return 0;
 }

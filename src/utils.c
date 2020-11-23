@@ -27,7 +27,7 @@ void write_file_normal(char *file_name, double *array, unsigned long size)
 void print_float_array(float *array, unsigned long size)
 {
     for (unsigned long i = 0; i < size; i++)
-        printf("%f ", array[i]);
+        printf("%f\n", array[i]);
 }
 
 unsigned long pow2(int exp)
